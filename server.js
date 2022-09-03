@@ -15,6 +15,15 @@ app.use(express.json());
 // Static Middleware
 app.use(express.static('public'));
 
+app.get("/api/notes", (req, res) => {
+    //'fs' to read file from db folder where users data is saved
+    fs.readFile("./db/db.json", "utf-8", (err, data) => {
+        if (err) throw err;
+        res.json(JSON.parse(data));
+    });
+});
+
+
 
 // GET Route for notes HTML page
 app.get('/notes', (req, res) => {
