@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+const notesRouter = require('./routes/notes.js');
 
 // Handles Async Processes
 const readFileAsync = util.promisify(fs.readFile);
@@ -19,28 +20,54 @@ app.use(express.json());
 // Static Middleware
 app.use(express.static('public'));
 
-app.get("/api/notes", (req, res) => {
+// Links to the routes
+app.use('/api/notes', notesRouter);
+
+// app.get("/api/notes", (req, res) => {
+//     readFileAsync("./db/db.json", "utf-8")
+//         .then((data) => {
+//             noteListItems = [].concat(JSON.parse(data));
+//             res.json(noteListItems);
+//     })
+// });
+
+// app.post("/api/notes", (req, res) => {
+//     const note = req.body;
+//     readFileAsync("./db/db.json", "utf-8")
+//         .then((data) => {
+//             const noteListItems = [].concat(JSON.parse(data));
+//             note.id = noteListItems.length + 1
+//             noteListItems.push(note);
+//             return noteListItems
+//         }).then((noteListItems) => {
+//             writeFileAsync("./db/db.json", JSON.stringify(noteListItems))
+//             res.json(note)
+//         });
+// });
+
+// app.delete("/api/notes/:id", (req, res) => {
+//     const let deleteID = parseInt()
+//     readFileAsync("./db/db.json", "utf-8")
+//         .then((data) => {
+//             const noteListItems = [].concat(JSON.parse(data));
+//             note.id = noteListItems.length + 1
+//             noteListItems.push(note);
+//             return noteListItems
+//         }).then((noteListItems) => {
+//             writeFileAsync("./db/db.json", JSON.stringify(noteListItems))
+//             res.json(note)
+//         });
+// });
+
+
+// GET Route for notes page
+app.get("/", (req, res) => {
     readFileAsync("./db/db.json", "utf-8")
         .then((data) => {
             noteListItems = [].concat(JSON.parse(data));
             res.json(noteListItems);
     })
 });
-
-app.post("/api/notes", (req, res) => {
-    const note = req.body;
-    readFileAsync("./db/db.json", "utf-8")
-        .then((data) => {
-            const noteListItems = [].concat(JSON.parse(data));
-            note.id = noteListItems.length + 1
-            noteListItems.push(note);
-            return noteListItems
-        }).then((noteListItems) => {
-            writeFileAsync("./db/db.json", JSON.stringify(noteListItems))
-            res.json(note)
-        });
-});
-
 
 
 // GET Route for notes HTML page
