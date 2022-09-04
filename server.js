@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const nodemon = require('nodemon');
 
 // setting up the server
 const app = express();
@@ -17,23 +16,25 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get("/api/notes", (req, res) => {
-    fs.readFile("./db/db.json", "utf-8", (err, data) => {
-        if (err) throw err;
-        res.json(JSON.parse(data));
-    });
+    fs.readFile("./db/db.json", "utf-8")
+        .then((data) => {
+            noteListItems = [].concat(JSON.parse(data));
+            res.json(noteListItems);
+    })
 });
 
 app.post("/api/notes", (req, res) => {
     const note = req.body;
-    fs.readFile("./db/db.json", "utf-8").then(data) => {
-        const noteListItems = [].concat(JSON.parse(data));
-        note.id = noteListItems.length + 1
-        noteListItems.push(note);
-        return noteListItems
-    }).then(noteListItems) => {
-        fs.writeFile("./db/db.json", JSON.stringify(noteListItems))
-        res.json(note)
-    };
+    return fs.readFile("./db/db.json", "utf-8")
+        .then((data) => {
+            const noteListItems = [].concat(JSON.parse(data));
+            note.id = noteListItems.length + 1
+            noteListItems.push(note);
+            noteListItems
+        }).then((noteListItems) => {
+            fs.writeFile("./db/db.json", JSON.stringify(noteListItems))
+            res.json(note)
+        });
 });
 
 
