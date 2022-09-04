@@ -1,11 +1,15 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const util = require('util');
+
+// Handles Async Processes
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
 // setting up the server
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 
 // Data parsing middleware
 app.use(express.urlencoded({ extended: true }));
@@ -16,7 +20,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get("/api/notes", (req, res) => {
-    fs.readFile("./db/db.json", "utf-8")
+    readFileAsync("./db/db.json", "utf-8")
         .then((data) => {
             noteListItems = [].concat(JSON.parse(data));
             res.json(noteListItems);
@@ -25,14 +29,14 @@ app.get("/api/notes", (req, res) => {
 
 app.post("/api/notes", (req, res) => {
     const note = req.body;
-    return fs.readFile("./db/db.json", "utf-8")
+    readFileAsync("./db/db.json", "utf-8")
         .then((data) => {
             const noteListItems = [].concat(JSON.parse(data));
             note.id = noteListItems.length + 1
             noteListItems.push(note);
-            noteListItems
+            return noteListItems
         }).then((noteListItems) => {
-            fs.writeFile("./db/db.json", JSON.stringify(noteListItems))
+            writeFileAsync("./db/db.json", JSON.stringify(noteListItems))
             res.json(note)
         });
 });
