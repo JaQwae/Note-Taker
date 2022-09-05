@@ -1,9 +1,13 @@
 const express = require('express');
 const notesRouter = require('express').Router();
+const fs = require('fs');
+const util = require('util');
 
-const app = express();
+// Handles Async Processes
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
-app.get("/", (req, res) => {
+notesRouter.get("/", (req, res) => {
     readFileAsync("./db/db.json", "utf-8")
         .then((data) => {
             noteListItems = [].concat(JSON.parse(data));
@@ -11,7 +15,7 @@ app.get("/", (req, res) => {
     })
 });
 
-app.post("/", (req, res) => {
+notesRouter.post("/", (req, res) => {
     const note = req.body;
     readFileAsync("./db/db.json", "utf-8")
         .then((data) => {
@@ -25,4 +29,5 @@ app.post("/", (req, res) => {
         });
 });
 
+// Exports
 module.exports = notesRouter;
