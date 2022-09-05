@@ -33,10 +33,14 @@ notesRouter.post("/", (req, res) => {
 
 // Deleting notes
 notesRouter.delete("/:id", (req, res) => {
-    const noteListItems = JSON.parse(readFileAsync("./db/db.json"));
-    const deleteNote = noteListItems.filter((rmvNote) => rmvNote.id !== req.params.id);
-    writeFileAsync("./db/db.json", JSON.stringify(deleteNote))
-    res.json(deleteNote)
+    readFileAsync('./db/db.json', 'utf-8').then((data) => {
+        const noteListItems = [].concat(JSON.parse(data));
+        const deleteNote = noteListItems.filter(
+            (rmvNote) => rmvNote.id != req.params.id
+        );
+        writeFileAsync('./db/db.json', JSON.stringify(deleteNote));
+        res.json(deleteNote);
+    });
 });
 
 // Exports
