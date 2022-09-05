@@ -70,9 +70,9 @@ This application provides a simple way for a user to create, manage, and delete 
 
   
 
-### Images:
+### Video:
 
-![insert image description here](.assets/images/..png)
+[Untitled_ Sep 5, 2022 2_23 PM.webm](https://user-images.githubusercontent.com/105896967/188505045-c96ba57f-f0f8-4c8d-9798-e588acb710ef.webm)
 
   
 
