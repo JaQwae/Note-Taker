@@ -79,6 +79,8 @@ This application provides a simple way for a user to create, manage, and delete 
 ## Contributors:
 
 - JaQwae Ellison
+- Xander Rapstine
+- John McCambridge
 
   
 
