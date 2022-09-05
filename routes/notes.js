@@ -7,7 +7,7 @@ const util = require('util');
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
-// Get and joins notes saved
+// Get and joins saved notes
 notesRouter.get("/", (req, res) => {
     readFileAsync("./db/db.json", "utf-8")
         .then((data) => {
