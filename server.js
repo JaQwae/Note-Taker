@@ -1,19 +1,15 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
-const util = require('util');
 const notesRouter = require('./routes/notes.js');
 
 // Setting up the server
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Data parsing middleware
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-// Static Middleware
 app.use(express.static('public'));
 
 // Links to notes functionality

@@ -7,6 +7,7 @@ const util = require('util');
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
+// Get and joins notes saved
 notesRouter.get("/", (req, res) => {
     readFileAsync("./db/db.json", "utf-8")
         .then((data) => {
@@ -15,6 +16,7 @@ notesRouter.get("/", (req, res) => {
     })
 });
 
+// Adding notes
 notesRouter.post("/", (req, res) => {
     const note = req.body;
     readFileAsync("./db/db.json", "utf-8")
@@ -27,6 +29,14 @@ notesRouter.post("/", (req, res) => {
             writeFileAsync("./db/db.json", JSON.stringify(noteListItems))
             res.json(note)
         });
+});
+
+// Deleting notes
+notesRouter.delete("/:id", (req, res) => {
+    const noteListItems = JSON.parse(readFileAsync("./db/db.json"));
+    const deleteNote = noteListItems.filter((rmvNote) => rmvNote.id !== req.params.id);
+    writeFileAsync("./db/db.json", JSON.stringify(deleteNote))
+    res.json(deleteNote)
 });
 
 // Exports
