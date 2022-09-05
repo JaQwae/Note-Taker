@@ -8,7 +8,7 @@ This application provides a simple way for a user to create, manage, and delete 
 
   
 
-[Deployed link](https://jay-note-taker.herokuapp.com/){:target="_blank" rel="noopener"}
+[Deployed link](https://jay-note-taker.herokuapp.com/ {:target="_blank" rel="noopener"})
 
   
 
